@@ -1,0 +1,118 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/Mux8Way16.hdl
+/**
+ * 8-way 16-bit multiplexor:
+ * out = a if sel = 000
+ *       b if sel = 001
+ *       c if sel = 010
+ *       d if sel = 011
+ *       e if sel = 100
+ *       f if sel = 101
+ *       g if sel = 110
+ *       h if sel = 111
+ */
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16],
+       e[16], f[16], g[16], h[16],
+       sel[3];
+    OUT out[16];
+
+    PARTS:
+    //// Replace this comment with your code.
+    Not(in=sel[0] , out=neg0 );
+    Not(in=sel[1] , out=neg1 );
+    Not(in=sel[2] , out=neg2 );
+
+    And(a=neg0 , b=neg1 , out=andSela );
+    And(a=andSela , b=neg2 , out=selA );
+
+    And(a=sel[0] , b=neg1 , out=andSelb );
+    And(a=andSelb , b=neg2 , out=selB );
+
+    And(a=neg0 , b=sel[1] , out=andSelc );
+    And(a=andSelc , b=neg2 , out=selC );
+
+    And(a=sel[0] , b=sel[1] , out=andSeld );
+    And(a=andSeld , b=neg2 , out=selD );
+
+    And(a=neg0 , b=neg1 , out=andSele );
+    And(a=andSele , b=sel[2] , out=selE );
+
+    And(a=sel[0] , b=neg1 , out=andSelf );
+    And(a=andSelf , b=sel[2] , out=selF );
+
+    And(a=neg0 , b=sel[1] , out=andSelg );
+    And(a=andSelg , b=sel[2] , out=selG );
+
+    And(a=sel[0] , b=sel[1] , out=andSelh );
+    And(a=andSelh , b=sel[2] , out=selH );
+
+And16(a = a, 
+      b[0] = selA, b[1] = selA, b[2] = selA, b[3] = selA, 
+      b[4] = selA, b[5] = selA, b[6] = selA, b[7] = selA, 
+      b[8] = selA, b[9] = selA, b[10] = selA, b[11] = selA, 
+      b[12] = selA, b[13] = selA, b[14] = selA, b[15] = selA, 
+      out = andA);
+
+And16(a = b, 
+      b[0] = selB, b[1] = selB, b[2] = selB, b[3] = selB, 
+      b[4] = selB, b[5] = selB, b[6] = selB, b[7] = selB, 
+      b[8] = selB, b[9] = selB, b[10] = selB, b[11] = selB, 
+      b[12] = selB, b[13] = selB, b[14] = selB, b[15] = selB, 
+      out = andB);
+
+And16(a = c, 
+      b[0] = selC, b[1] = selC, b[2] = selC, b[3] = selC, 
+      b[4] = selC, b[5] = selC, b[6] = selC, b[7] = selC, 
+      b[8] = selC, b[9] = selC, b[10] = selC, b[11] = selC, 
+      b[12] = selC, b[13] = selC, b[14] = selC, b[15] = selC, 
+      out = andC);
+
+And16(a = d, 
+      b[0] = selD, b[1] = selD, b[2] = selD, b[3] = selD, 
+      b[4] = selD, b[5] = selD, b[6] = selD, b[7] = selD, 
+      b[8] = selD, b[9] = selD, b[10] = selD, b[11] = selD, 
+      b[12] = selD, b[13] = selD, b[14] = selD, b[15] = selD, 
+      out = andD);
+
+And16(a = e, 
+      b[0] = selE, b[1] = selE, b[2] = selE, b[3] = selE, 
+      b[4] = selE, b[5] = selE, b[6] = selE, b[7] = selE, 
+      b[8] = selE, b[9] = selE, b[10] = selE, b[11] = selE, 
+      b[12] = selE, b[13] = selE, b[14] = selE, b[15] = selE, 
+      out = andE);
+
+And16(a = f, 
+      b[0] = selF, b[1] = selF, b[2] = selF, b[3] = selF, 
+      b[4] = selF, b[5] = selF, b[6] = selF, b[7] = selF, 
+      b[8] = selF, b[9] = selF, b[10] = selF, b[11] = selF, 
+      b[12] = selF, b[13] = selF, b[14] = selF, b[15] = selF, 
+      out = andF);
+
+And16(a = g, 
+      b[0] = selG, b[1] = selG, b[2] = selG, b[3] = selG, 
+      b[4] = selG, b[5] = selG, b[6] = selG, b[7] = selG, 
+      b[8] = selG, b[9] = selG, b[10] = selG, b[11] = selG, 
+      b[12] = selG, b[13] = selG, b[14] = selG, b[15] = selG, 
+      out = andG);
+
+And16(a = h, 
+      b[0] = selH, b[1] = selH, b[2] = selH, b[3] = selH, 
+      b[4] = selH, b[5] = selH, b[6] = selH, b[7] = selH, 
+      b[8] = selH, b[9] = selH, b[10] = selH, b[11] = selH, 
+      b[12] = selH, b[13] = selH, b[14] = selH, b[15] = selH, 
+      out = andH);
+
+      Or16(a=andA , b=andB , out=or1 );
+      Or16(a=andC , b=andD , out=or2 );
+      Or16(a=andE , b=andF , out=or3 );
+      Or16(a=andG , b=andH , out=or4 );
+      Or16(a=or1 , b=or2 , out=or5 );
+      Or16(a=or3 , b=or4 , out=or6 );
+      Or16(a=or5 , b=or6 , out=out );
+
+
+
+}
